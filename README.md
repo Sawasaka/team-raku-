@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# チーム楽 🎾⚾
 
-## Getting Started
+野球チーム向けのお当番管理Webアプリケーション
 
-First, run the development server:
+## ✨ 特徴
+
+- **シンプルで使いやすい** - ITリテラシーが低い方でも直感的に操作可能
+- **Apple風の洗練されたデザイン** - スカイブルーをベースにした美しいUI
+- **レスポンシブ対応** - スマホ・タブレット・PCすべてに対応
+- **お当番管理** - 練習・試合の当番を簡単に管理
+- **交代リクエスト** - 急な予定変更も安心の交代申請機能
+
+## 🛠 技術スタック
+
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **UI Components**: shadcn/ui
+- **Animation**: Framer Motion
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Auth
+- **Email**: Resend
+- **Hosting**: Vercel
+
+## 🚀 セットアップ
+
+### 1. 依存関係のインストール
+
+```bash
+npm install
+```
+
+### 2. 環境変数の設定
+
+`.env.local` ファイルを作成し、以下を設定:
+
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# アプリURL
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+### 3. Supabaseのセットアップ
+
+1. [Supabase](https://supabase.com) でプロジェクトを作成
+2. `supabase/schema.sql` をSQL Editorで実行
+3. （オプション）`supabase/seed.sql` でサンプルデータを投入
+
+### 4. 開発サーバーの起動
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+http://localhost:3000 でアクセス
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 プロジェクト構造
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+team-raku/
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── (auth)/            # 認証ページ
+│   │   ├── (dashboard)/       # ユーザー向けページ
+│   │   ├── admin/             # 管理者向けページ
+│   │   └── api/               # API Routes
+│   ├── components/
+│   │   ├── ui/                # shadcn/ui コンポーネント
+│   │   ├── layout/            # レイアウトコンポーネント
+│   │   └── features/          # 機能別コンポーネント
+│   ├── lib/
+│   │   ├── supabase/          # Supabaseクライアント
+│   │   ├── utils.ts           # ユーティリティ関数
+│   │   └── constants.ts       # 定数
+│   ├── hooks/                 # カスタムフック
+│   └── types/                 # 型定義
+├── supabase/
+│   ├── schema.sql             # DBスキーマ
+│   └── seed.sql               # サンプルデータ
+└── public/                    # 静的ファイル
+```
 
-## Learn More
+## 🎨 カラーパレット
 
-To learn more about Next.js, take a look at the following resources:
+| 名前 | 色 | 用途 |
+|------|-----|------|
+| Primary | `#0ea5e9` | スカイブルー（メインカラー） |
+| Accent | `#f97316` | オレンジ（アクセント） |
+| Background | `#ffffff` | 背景 |
+| Foreground | `#0f172a` | テキスト |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📱 主な画面
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### ユーザー向け
+- `/dashboard` - ダッシュボード
+- `/calendar` - カレンダービュー
+- `/events/[id]` - イベント詳細
+- `/profile` - プロフィール設定
+- `/notifications` - 通知一覧
 
-## Deploy on Vercel
+### 管理者向け
+- `/admin/events` - イベント管理
+- `/admin/events/[id]/assign` - 当番割り当て
+- `/admin/members` - メンバー管理
+- `/admin/requests` - 交代リクエスト管理
+- `/admin/categories` - カテゴリ管理
+- `/admin/settings` - チーム設定
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔐 権限
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| 権限 | 説明 |
+|------|------|
+| スーパー管理者 | 全機能へのアクセス |
+| 管理者 | 当番割当、メンバー管理、リクエスト承認 |
+| メンバー | 当番確認、出欠登録、交代リクエスト |
+
+## 📦 デプロイ
+
+### Vercel
+
+1. GitHubにプッシュ
+2. Vercelでインポート
+3. 環境変数を設定
+4. デプロイ
+
+```bash
+# 本番ビルドの確認
+npm run build
+```
+
+## 🗺 ロードマップ
+
+- [x] Phase 1: 基盤構築
+- [x] Phase 2: コア機能（イベント・当番管理）
+- [x] Phase 3: ユーザー機能（カレンダー・出欠・交代リクエスト）
+- [ ] Phase 4: 仕上げ（メール通知・3D演出・アニメーション調整）
+
+## 📄 ライセンス
+
+MIT License
+
+---
+
+Made with ❤️ for 中学硬式野球チーム
