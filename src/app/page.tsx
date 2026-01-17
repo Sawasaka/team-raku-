@@ -541,7 +541,7 @@ function InteractiveDemo({ benefits }: { benefits: string[] }) {
               </span>
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              ITが苦手な方でも大丈夫。
+              かんたん設計だから安心。
               <br />
               大きなボタンとわかりやすい画面で、迷わず操作できます。
             </p>
@@ -937,7 +937,7 @@ export default function HomePage() {
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 px-4 py-2 text-sm font-medium text-indigo-700 ring-1 ring-inset ring-indigo-500/20 mb-8 shadow-lg"
               >
                 <Sparkles className="h-4 w-4" />
-                野球チーム向けお当番管理アプリ
+                チーム楽 - お当番管理アプリ
               </motion.div>
 
               {/* メインタイトル */}
@@ -1002,7 +1002,7 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: 0.5 }}
                 className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground"
               >
-                {['無料で使える', 'かんたん設定', '直感的に使える'].map((text, i) => (
+                {['3ヶ月無料', 'かんたん設定', '直感的に使える'].map((text, i) => (
                   <motion.div 
                     key={text} 
                     className="flex items-center gap-2"
@@ -1016,11 +1016,12 @@ export default function HomePage() {
                 ))}
               </motion.div>
 
-              {/* ダッシュボードプレビュー */}
-              <DashboardPreview />
             </div>
           </div>
         </section>
+
+        {/* インタラクティブデモセクション */}
+        <InteractiveDemo benefits={benefits} />
 
         {/* 特徴セクション */}
         <section className="py-20 sm:py-32 bg-gradient-to-b from-background via-indigo-50/30 to-background relative overflow-hidden">
@@ -1104,8 +1105,105 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* インタラクティブデモセクション */}
-        <InteractiveDemo benefits={benefits} />
+        {/* 料金セクション */}
+        <section className="py-20 sm:py-28 relative overflow-hidden bg-gradient-to-b from-transparent via-indigo-50/30 to-transparent">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            {/* セクションヘッダー */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">シンプルな料金プラン</span>
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                チーム規模に関わらず、同じ価格でご利用いただけます
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              {/* 料金カード */}
+              <div className="relative rounded-3xl bg-gradient-to-br from-white to-indigo-50/80 border border-indigo-100 p-8 sm:p-10 shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                {/* 背景装飾 */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                
+                <div className="relative z-10">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+                    {/* 左側: 価格情報 */}
+                    <div>
+                      {/* 3ヶ月無料バッジ */}
+                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 text-sm font-semibold mb-6">
+                        <span>🎉</span>
+                        <span>3ヶ月無料</span>
+                      </div>
+                      
+                      {/* 価格表示 */}
+                      <div className="flex items-baseline gap-3 mb-3">
+                        <span className="text-muted-foreground text-xl line-through">¥15,800</span>
+                        <span className="text-muted-foreground">→</span>
+                        <span className="text-5xl sm:text-6xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">¥9,800</span>
+                        <span className="text-muted-foreground text-lg">/月</span>
+                      </div>
+                      
+                      {/* 利用人数 */}
+                      <div className="flex items-center gap-2 text-foreground/80">
+                        <Users className="h-5 w-5 text-indigo-500" />
+                        <span className="font-medium">利用人数無制限</span>
+                      </div>
+                    </div>
+
+                    {/* 右側: 特典リスト */}
+                    <div className="lg:min-w-[300px]">
+                      <div className="text-sm font-semibold text-muted-foreground mb-4 flex items-center gap-2">
+                        <span>💎</span>
+                        <span>有料登録特典</span>
+                      </div>
+                      <div className="space-y-3">
+                        {[
+                          '特集インタビュー',
+                          '特集ページ作成',
+                          '特別記事作成',
+                        ].map((feature) => (
+                          <div key={feature} className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <div className="h-5 w-5 rounded-full bg-emerald-100 flex items-center justify-center">
+                                <Check className="h-3 w-3 text-emerald-600" />
+                              </div>
+                              <span className="text-foreground/80 text-sm">{feature}</span>
+                            </div>
+                            <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 text-xs font-medium">無料</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* CTAボタン */}
+                  <div className="mt-8 pt-8 border-t border-indigo-100">
+                    <Button
+                      asChild
+                      size="lg"
+                      className="w-full sm:w-auto group bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/30 transition-all duration-300 text-base px-10 py-6 rounded-xl"
+                    >
+                      <Link href="/register">
+                        無料で始める
+                        <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
         {/* CTAセクション */}
         <section className="py-20 sm:py-32 bg-gradient-to-br from-indigo-50 via-purple-50 to-indigo-100 relative">

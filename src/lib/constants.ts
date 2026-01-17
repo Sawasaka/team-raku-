@@ -73,7 +73,7 @@ export const USER_ROLE_LABELS = {
 
 // アプリ情報
 export const APP_NAME = 'チーム楽';
-export const APP_DESCRIPTION = '野球チーム向けお当番管理アプリ';
+export const APP_DESCRIPTION = 'チーム楽 - お当番管理アプリ';
 
 
 
