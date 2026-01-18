@@ -234,8 +234,8 @@ export default function AdminEventsPage() {
                       <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
                         <Link href={`/admin/events/${event.id}/edit`}>
                           <Edit className="h-3.5 w-3.5" />
-                        </Link>
-                      </Button>
+                </Link>
+              </Button>
                       <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive hover:text-destructive">
                         <Trash2 className="h-3.5 w-3.5" />
                       </Button>
@@ -270,8 +270,8 @@ export default function AdminEventsPage() {
               onMonthChange={setCurrentMonth}
               showLegend={true}
             />
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
         {/* 選択した日の詳細 or 次の予定 */}
         <Card className="border-0 shadow-md">
@@ -300,7 +300,7 @@ export default function AdminEventsPage() {
                       <div className="flex items-center justify-between mb-1">
                         <Badge variant="secondary" className="text-xs">
                           {EVENT_TYPE_LABELS[event.event_type] || event.event_type}
-                        </Badge>
+                            </Badge>
                         <div className="flex items-center gap-1">
                           <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
                             <Link href={`/admin/events/${event.id}/edit`}>
@@ -333,8 +333,8 @@ export default function AdminEventsPage() {
                         <p className="text-xs text-muted-foreground mt-2 pt-2 border-t border-border/50">
                           {event.description}
                         </p>
-                      )}
-                    </div>
+                            )}
+                          </div>
                   );
                 })}
                 <Button 
@@ -358,7 +358,7 @@ export default function AdminEventsPage() {
                 >
                   選択をクリア
                 </Button>
-              </div>
+                        </div>
             ) : (
               /* デフォルト: 次の予定を表示 */
               <div className="space-y-3">
@@ -372,7 +372,7 @@ export default function AdminEventsPage() {
                         予定を追加
                       </Link>
                     </Button>
-                  </div>
+                            </div>
                 ) : (
                   upcomingEvents.map((event) => {
                     const style = eventTypeStyles[event.event_type] || eventTypeStyles.other;
@@ -411,10 +411,10 @@ export default function AdminEventsPage() {
                     );
                   })
                 )}
-              </div>
+                    </div>
             )}
-          </CardContent>
-        </Card>
+                </CardContent>
+              </Card>
       </div>
     </PageContainer>
   );

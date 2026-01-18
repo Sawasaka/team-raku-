@@ -181,7 +181,7 @@ export default function AdminDutiesPage() {
               <Car className="mr-2 h-4 w-4" />
               配車
             </Link>
-          </Button>
+        </Button>
         </div>
       }
     >
@@ -196,10 +196,10 @@ export default function AdminDutiesPage() {
           <Card className="border-0 shadow-md">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
               <div>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <ClipboardCheck className="h-5 w-5 text-primary" />
-                  当番カテゴリ
-                </CardTitle>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <ClipboardCheck className="h-5 w-5 text-primary" />
+                当番カテゴリ
+              </CardTitle>
                 <p className="text-sm text-muted-foreground mt-1">
                   新規当番割り当てで選択可能なカテゴリ
                 </p>
@@ -299,9 +299,9 @@ export default function AdminDutiesPage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Users className="h-4 w-4" />
-                        {duty.assignee}
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Users className="h-4 w-4" />
+                      {duty.assignee}
                       </div>
                       <Button
                         variant="ghost"

@@ -1046,12 +1046,12 @@ export default function HomePage() {
               </motion.span>
               <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
-                  1分でわかる
+                  動画でわかる
                 </span>
                 チーム楽
               </h2>
               <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-                実際の画面を見ながら、サービスの使い方をご紹介します
+                チーム楽の特徴をサクッとご紹介します
               </p>
             </motion.div>
 
