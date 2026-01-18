@@ -16,7 +16,8 @@ import {
   Clock,
   MapPin,
   Check,
-  Settings
+  Settings,
+  Play
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -1017,6 +1018,87 @@ export default function HomePage() {
               </motion.div>
 
             </div>
+          </div>
+        </section>
+
+        {/* サービス紹介動画セクション */}
+        <section className="py-16 sm:py-24 bg-gradient-to-b from-background via-secondary/20 to-background relative overflow-hidden">
+          {/* 背景装飾 */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-10 right-20 w-64 h-64 bg-indigo-200/30 rounded-full blur-3xl" />
+            <div className="absolute bottom-10 left-20 w-64 h-64 bg-purple-200/30 rounded-full blur-3xl" />
+          </div>
+
+          <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-center mb-10"
+            >
+              <motion.span 
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-500/10 to-orange-500/10 text-red-600 text-sm font-semibold mb-4 ring-1 ring-red-500/20"
+                whileHover={{ scale: 1.05 }}
+              >
+                <Play className="h-4 w-4" />
+                サービス紹介動画
+              </motion.span>
+              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+                  1分でわかる
+                </span>
+                チーム楽
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+                実際の画面を見ながら、サービスの使い方をご紹介します
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="relative"
+            >
+              {/* 動画コンテナの装飾 */}
+              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 blur-2xl" />
+              
+              {/* 動画埋め込み */}
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border/50 bg-black aspect-video">
+                <iframe
+                  src="https://www.youtube.com/embed/3eTOctnUuwY?rel=0&modestbranding=1"
+                  title="チーム楽 サービス紹介動画"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
+              </div>
+
+              {/* 動画下のアクション */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4"
+              >
+                <Button
+                  asChild
+                  size="lg"
+                  className="group bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                >
+                  <Link href="/register">
+                    無料で始める
+                    <ChevronRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </Button>
+                <p className="text-sm text-muted-foreground">
+                  3ヶ月間無料でお試しいただけます
+                </p>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
