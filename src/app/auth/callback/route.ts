@@ -17,20 +17,10 @@ export async function GET(request: Request) {
 
   const supabase = await createClient();
 
-  // パスワードリセットの場合
+  // パスワードリセットの場合 - クライアント側で処理するためにリダイレクト
   if (type === 'recovery' && token_hash) {
-    const { error } = await supabase.auth.verifyOtp({
-      token_hash,
-      type: 'recovery',
-    });
-
-    if (error) {
-      console.error('Recovery verification error:', error);
-      return NextResponse.redirect(`${origin}/login?error=invalid_token`);
-    }
-
-    // パスワード更新ページへリダイレクト
-    return NextResponse.redirect(`${origin}/update-password`);
+    // update-passwordページにトークンを渡してクライアント側で処理
+    return NextResponse.redirect(`${origin}/update-password?token_hash=${token_hash}&type=recovery`);
   }
 
   // メール確認（signup）の場合

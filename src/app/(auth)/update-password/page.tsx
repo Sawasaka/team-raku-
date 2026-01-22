@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Lock, Eye, EyeOff, Loader2, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,13 +11,44 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { createClient } from '@/lib/supabase/client';
 import { toast } from 'sonner';
 
-export default function UpdatePasswordPage() {
+function UpdatePasswordContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      const token_hash = searchParams.get('token_hash');
+      const type = searchParams.get('type');
+
+      if (token_hash && type === 'recovery') {
+        try {
+          const supabase = createClient();
+          const { error } = await supabase.auth.verifyOtp({
+            token_hash,
+            type: 'recovery',
+          });
+
+          if (error) {
+            console.error('Token verification error:', error);
+            setError('リンクの有効期限が切れているか、無効です。');
+          }
+        } catch (err) {
+          console.error('Verification error:', err);
+          setError('認証エラーが発生しました。');
+        }
+      }
+      setIsVerifying(false);
+    };
+
+    verifyToken();
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,6 +91,40 @@ export default function UpdatePasswordPage() {
       setIsLoading(false);
     }
   };
+
+  if (isVerifying) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-indigo-500" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="w-full max-w-md"
+      >
+        <Card className="border-0 shadow-xl">
+          <CardHeader className="space-y-1 text-center">
+            <CardTitle className="text-2xl font-bold text-red-600">エラー</CardTitle>
+            <CardDescription>{error}</CardDescription>
+          </CardHeader>
+          <CardFooter>
+            <Button
+              onClick={() => router.push('/reset-password')}
+              className="w-full"
+            >
+              もう一度リセットメールを送信
+            </Button>
+          </CardFooter>
+        </Card>
+      </motion.div>
+    );
+  }
 
   if (isSuccess) {
     return (
@@ -169,5 +234,17 @@ export default function UpdatePasswordPage() {
         </form>
       </Card>
     </motion.div>
+  );
+}
+
+export default function UpdatePasswordPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-indigo-500" />
+      </div>
+    }>
+      <UpdatePasswordContent />
+    </Suspense>
   );
 }
