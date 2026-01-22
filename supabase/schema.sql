@@ -20,6 +20,11 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR(255) NOT NULL,
   role VARCHAR(20) DEFAULT 'member' CHECK (role IN ('super_admin', 'admin', 'member')),
   avatar_url VARCHAR(500),
+  -- Stripe関連
+  stripe_customer_id VARCHAR(255),
+  stripe_subscription_id VARCHAR(255),
+  subscription_status VARCHAR(50) CHECK (subscription_status IN ('trialing', 'active', 'canceled', 'past_due', 'unpaid', 'incomplete')),
+  trial_ends_at TIMESTAMP WITH TIME ZONE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 

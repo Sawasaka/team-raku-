@@ -937,7 +937,7 @@ export default function HomePage() {
                 transition={{ duration: 0.5 }}
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 px-4 py-2 text-sm font-medium text-indigo-700 ring-1 ring-inset ring-indigo-500/20 mb-8 shadow-lg"
               >
-                <Sparkles className="h-4 w-4" />
+                  <Sparkles className="h-4 w-4" />
                 チーム楽 - お当番管理アプリ
               </motion.div>
 
@@ -1191,25 +1191,25 @@ export default function HomePage() {
         <section className="py-20 sm:py-28 relative overflow-hidden bg-gradient-to-b from-transparent via-indigo-50/30 to-transparent">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             {/* セクションヘッダー */}
-            <motion.div
+              <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
               className="text-center mb-12"
             >
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
                 <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">シンプルな料金プラン</span>
-              </h2>
+                </h2>
               <p className="text-muted-foreground text-lg">
                 チーム規模に関わらず、同じ価格でご利用いただけます
               </p>
-            </motion.div>
+              </motion.div>
 
-            <motion.div
+              <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+                viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               {/* 料金カード */}
@@ -1245,26 +1245,24 @@ export default function HomePage() {
                     {/* 右側: 特典リスト */}
                     <div className="lg:min-w-[300px]">
                       <div className="text-sm font-semibold text-muted-foreground mb-4 flex items-center gap-2">
-                        <span>💎</span>
-                        <span>有料登録特典</span>
+                        <span>✨</span>
+                        <span>すべての機能が使える</span>
                       </div>
                       <div className="space-y-3">
                         {[
-                          '特集インタビュー',
-                          '特集ページ作成',
-                          '特別記事作成',
+                          'お当番管理・自動割り当て',
+                          '配車管理・車両登録',
+                          'チームメンバー管理',
+                          '出欠確認・通知機能',
                         ].map((feature) => (
-                          <div key={feature} className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <div className="h-5 w-5 rounded-full bg-emerald-100 flex items-center justify-center">
-                                <Check className="h-3 w-3 text-emerald-600" />
-                              </div>
-                              <span className="text-foreground/80 text-sm">{feature}</span>
-                            </div>
-                            <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 text-xs font-medium">無料</span>
-                          </div>
+                          <div key={feature} className="flex items-center gap-2">
+                            <div className="h-5 w-5 rounded-full bg-emerald-100 flex items-center justify-center">
+                              <Check className="h-3 w-3 text-emerald-600" />
+                  </div>
+                            <span className="text-foreground/80 text-sm">{feature}</span>
+                    </div>
                         ))}
-                      </div>
+                    </div>
                     </div>
                   </div>
                   
@@ -1280,10 +1278,10 @@ export default function HomePage() {
                         <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
           </div>
         </section>
 
@@ -1306,12 +1304,12 @@ export default function HomePage() {
                 チーム運営をもっと楽に、もっとスマートに。
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button
+              <Button
                   asChild
-                  size="lg"
+                size="lg"
                   className="group bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-base px-10 py-6"
-                >
-                  <Link href="/register">
+              >
+                <Link href="/register">
                     無料で登録する
                     <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
                   </Link>
@@ -1324,8 +1322,8 @@ export default function HomePage() {
                 >
                   <Link href="/login">
                     ログイン
-                  </Link>
-                </Button>
+                </Link>
+              </Button>
               </div>
             </motion.div>
           </div>
