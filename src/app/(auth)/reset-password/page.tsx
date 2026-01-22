@@ -62,8 +62,7 @@ export default function ResetPasswordPage() {
             </motion.div>
             <CardTitle className="text-2xl font-bold">メールを送信しました</CardTitle>
             <CardDescription>
-              {email} にパスワードリセット用のリンクを送信しました。
-              メールをご確認ください。
+              メールをご確認ください
             </CardDescription>
           </CardHeader>
           <CardFooter className="flex flex-col gap-4">
