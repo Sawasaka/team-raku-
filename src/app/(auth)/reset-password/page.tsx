@@ -87,15 +87,14 @@ export default function ResetPasswordPage() {
       className="w-full max-w-md"
     >
       <Card className="border-0 shadow-xl">
-        <CardHeader className="space-y-1 text-center">
+        <CardHeader className="space-y-2 text-center pb-4">
           <CardTitle className="text-2xl font-bold">パスワードをリセット</CardTitle>
           <CardDescription>
-            登録したメールアドレスを入力してください。
-            パスワードリセット用のリンクをお送りします。
+            リセット用のリンクをメールでお送りします
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6 pt-2">
             <div className="space-y-2">
               <Label htmlFor="email">メールアドレス</Label>
               <div className="relative">
@@ -111,8 +110,6 @@ export default function ResetPasswordPage() {
                 />
               </div>
             </div>
-          </CardContent>
-          <CardFooter className="flex flex-col gap-4">
             <Button
               type="submit"
               className="w-full h-12 text-base"
@@ -127,6 +124,8 @@ export default function ResetPasswordPage() {
                 'リセットメールを送信'
               )}
             </Button>
+          </CardContent>
+          <CardFooter className="pt-0">
             <Link href="/login" className="w-full">
               <Button variant="ghost" className="w-full">
                 <ArrowLeft className="mr-2 h-4 w-4" />
