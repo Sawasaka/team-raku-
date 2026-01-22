@@ -1,14 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { CreditCard, Check, Shield, Clock, ArrowRight, Loader2, Users, Mail, X } from 'lucide-react';
+import { CreditCard, Check, Shield, ArrowRight, Loader2, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-export default function SetupPaymentPage() {
+function SetupPaymentContent() {
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const canceled = searchParams.get('canceled');
@@ -136,5 +136,17 @@ export default function SetupPaymentPage() {
         </Card>
       </motion.div>
     </div>
+  );
+}
+
+export default function SetupPaymentPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-indigo-500" />
+      </div>
+    }>
+      <SetupPaymentContent />
+    </Suspense>
   );
 }
