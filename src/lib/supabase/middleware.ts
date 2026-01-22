@@ -48,11 +48,13 @@ export async function updateSession(request: NextRequest) {
   const isApiRoute = request.nextUrl.pathname.startsWith('/api');
   const isLegalPage = request.nextUrl.pathname.startsWith('/terms') ||
     request.nextUrl.pathname.startsWith('/privacy');
+  const isPasswordPage = request.nextUrl.pathname.startsWith('/reset-password') ||
+    request.nextUrl.pathname.startsWith('/update-password');
 
   // 未認証ユーザーの制限
   if (!user) {
     // 未認証でもアクセスできるページ
-    const canAccess = isLoginPage || isAuthCallback || isPublicPage || isApiRoute || isLegalPage;
+    const canAccess = isLoginPage || isAuthCallback || isPublicPage || isApiRoute || isLegalPage || isPasswordPage;
     if (!canAccess) {
       const url = request.nextUrl.clone();
       url.pathname = '/login';
