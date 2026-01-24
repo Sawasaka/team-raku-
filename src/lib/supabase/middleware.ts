@@ -50,11 +50,14 @@ export async function updateSession(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/privacy');
   const isPasswordPage = request.nextUrl.pathname.startsWith('/reset-password') ||
     request.nextUrl.pathname.startsWith('/update-password');
+  const isStaticFile = request.nextUrl.pathname.endsWith('.html') ||
+    request.nextUrl.pathname.endsWith('.txt') ||
+    request.nextUrl.pathname.endsWith('.xml');
 
   // 未認証ユーザーの制限
   if (!user) {
     // 未認証でもアクセスできるページ
-    const canAccess = isLoginPage || isAuthCallback || isPublicPage || isApiRoute || isLegalPage || isPasswordPage;
+    const canAccess = isLoginPage || isAuthCallback || isPublicPage || isApiRoute || isLegalPage || isPasswordPage || isStaticFile;
     if (!canAccess) {
       const url = request.nextUrl.clone();
       url.pathname = '/login';
