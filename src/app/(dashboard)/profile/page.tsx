@@ -12,7 +12,9 @@ import {
   Calendar,
   Clock,
   ClipboardCheck,
-  Package
+  Package,
+  CreditCard,
+  ExternalLink
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -50,6 +52,7 @@ const mockCurrentSettings = {
 
 export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isPortalLoading, setIsPortalLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: mockUser.name,
     email: mockUser.email,
@@ -97,6 +100,32 @@ export default function ProfilePage() {
       toast.error('エラーが発生しました');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleManageSubscription = async () => {
+    setIsPortalLoading(true);
+    
+    try {
+      const response = await fetch('/api/stripe/create-portal-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      const data = await response.json();
+      
+      if (data.error) {
+        toast.error(data.error);
+        return;
+      }
+      
+      window.location.href = data.url;
+    } catch (error) {
+      toast.error('エラーが発生しました');
+    } finally {
+      setIsPortalLoading(false);
     }
   };
 
@@ -410,6 +439,42 @@ export default function ProfilePage() {
                     </div>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* サブスクリプション管理 */}
+            <Card className="border-0 shadow-md">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <CreditCard className="h-5 w-5 text-primary" />
+                  サブスクリプション管理
+                </CardTitle>
+                <CardDescription>
+                  プランの確認、支払い方法の更新、キャンセルができます
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <Button 
+                  type="button"
+                  onClick={handleManageSubscription} 
+                  disabled={isPortalLoading}
+                  className="w-full"
+                >
+                  {isPortalLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      読み込み中...
+                    </>
+                  ) : (
+                    <>
+                      <ExternalLink className="mr-2 h-4 w-4" />
+                      サブスクリプションを管理
+                    </>
+                  )}
+                </Button>
+                <p className="text-xs text-muted-foreground">
+                  ※ Stripeの安全なポータルで管理できます
+                </p>
               </CardContent>
             </Card>
 
