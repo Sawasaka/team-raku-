@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Settings,
@@ -9,7 +9,9 @@ import {
   Copy,
   Check,
   RefreshCw,
-  Users
+  Users,
+  CreditCard,
+  ExternalLink
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +19,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { toast } from 'sonner';
+import { createClient } from '@/lib/supabase/client';
 
 // モックデータ
 const mockTeam = {
@@ -27,10 +30,34 @@ const mockTeam = {
 
 export default function SettingsPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isPortalLoading, setIsPortalLoading] = useState(false);
   const [teamName, setTeamName] = useState(mockTeam.name);
   const [copied, setCopied] = useState(false);
+  const [subscriptionStatus, setSubscriptionStatus] = useState<string | null>(null);
 
   const inviteLink = `https://team-raku.vercel.app/register?invite=${mockTeam.invite_token}`;
+
+  useEffect(() => {
+    // ユーザーのサブスクリプション状態を取得
+    const fetchSubscriptionStatus = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        const { data } = await supabase
+          .from('users')
+          .select('subscription_status')
+          .eq('id', user.id)
+          .single();
+        
+        if (data?.subscription_status) {
+          setSubscriptionStatus(data.subscription_status);
+        }
+      }
+    };
+    
+    fetchSubscriptionStatus();
+  }, []);
 
   const handleSave = async () => {
     if (!teamName.trim()) {
@@ -69,6 +96,50 @@ export default function SettingsPage() {
     toast.success('招待リンクを再生成しました');
   };
 
+  const handleManageSubscription = async () => {
+    setIsPortalLoading(true);
+    
+    try {
+      const response = await fetch('/api/stripe/create-portal-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      const data = await response.json();
+      
+      if (data.error) {
+        toast.error(data.error);
+        return;
+      }
+      
+      // Stripeポータルへリダイレクト
+      window.location.href = data.url;
+    } catch (error) {
+      toast.error('エラーが発生しました');
+    } finally {
+      setIsPortalLoading(false);
+    }
+  };
+
+  const getStatusLabel = (status: string | null) => {
+    switch (status) {
+      case 'trialing':
+        return { text: 'トライアル中', color: 'text-blue-600 bg-blue-50' };
+      case 'active':
+        return { text: 'アクティブ', color: 'text-green-600 bg-green-50' };
+      case 'canceled':
+        return { text: 'キャンセル済み', color: 'text-red-600 bg-red-50' };
+      case 'past_due':
+        return { text: '支払い遅延', color: 'text-orange-600 bg-orange-50' };
+      default:
+        return { text: '未設定', color: 'text-gray-600 bg-gray-50' };
+    }
+  };
+
+  const statusLabel = getStatusLabel(subscriptionStatus);
+
   return (
     <PageContainer
       title="チーム設定"
@@ -80,6 +151,49 @@ export default function SettingsPage() {
         transition={{ duration: 0.4 }}
         className="max-w-2xl space-y-6"
       >
+        {/* サブスクリプション管理 */}
+        <Card className="border-0 shadow-md">
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <CreditCard className="h-5 w-5 text-primary" />
+              サブスクリプション管理
+            </CardTitle>
+            <CardDescription>
+              プランの変更、支払い方法の更新、請求履歴の確認ができます
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-between p-4 rounded-lg bg-secondary/50">
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-muted-foreground">現在のステータス:</span>
+                <span className={`text-sm font-medium px-3 py-1 rounded-full ${statusLabel.color}`}>
+                  {statusLabel.text}
+                </span>
+              </div>
+            </div>
+            <Button 
+              onClick={handleManageSubscription} 
+              disabled={isPortalLoading}
+              className="w-full"
+            >
+              {isPortalLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  読み込み中...
+                </>
+              ) : (
+                <>
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  サブスクリプションを管理
+                </>
+              )}
+            </Button>
+            <p className="text-xs text-muted-foreground">
+              ※ Stripeの安全なポータルで管理できます
+            </p>
+          </CardContent>
+        </Card>
+
         {/* チーム情報 */}
         <Card className="border-0 shadow-md">
           <CardHeader>
@@ -182,8 +296,3 @@ export default function SettingsPage() {
     </PageContainer>
   );
 }
-
-
-
-
-
