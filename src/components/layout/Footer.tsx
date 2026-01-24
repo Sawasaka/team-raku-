@@ -16,6 +16,14 @@ export function Footer() {
             </div>
             <span className="text-lg font-semibold text-foreground">{APP_NAME}</span>
           </div>
+          <div className="flex items-center gap-6">
+            <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              プライバシーポリシー
+            </Link>
+            <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              利用規約
+            </Link>
+          </div>
           <p className="text-sm text-muted-foreground">
             © {currentYear} {APP_NAME}. All rights reserved.
           </p>
